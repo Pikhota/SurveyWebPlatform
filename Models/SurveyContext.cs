@@ -9,7 +9,7 @@ namespace SurveyWebPlatform.Models
 		public DbSet<Variant> Variants { get; set; }
 		public SurveyContext(DbContextOptions<SurveyContext> options) : base(options)
 		{
-
+			Database.Migrate();
 		}
 	}
 }

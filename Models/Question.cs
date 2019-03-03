@@ -13,7 +13,7 @@ namespace SurveyWebPlatform.Models
 		[Required]
 		public string QuestionText { get; set; }
 		public string QuestionComment { get; set; }
-		public int SurveyId { get; set; }
+		public int? SurveyId { get; set; }
 		public Survey Survey { get; set; }
 		public List<Variant> Variants { get; set; }
 	}
