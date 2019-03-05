@@ -1,26 +1,35 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material/material.module';
 
 import { AppComponent } from './app.component';
 import { SurveyService } from './shared/services/survey.service';
 import { SurveyComponent } from './survey/survey.component';
-import { SurveyDetailComponent } from './survey/survey-detail/survey-detail.component';
-import { SurveyListComponent } from './survey/survey-list/survey-list.component';
+import { SurveyAddComponent } from './survey/survey-add/survey-add.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule, RoutingComponents } from './app-routing/app-routing.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    RoutingComponents,
     SurveyComponent,
-    SurveyDetailComponent,
-    SurveyListComponent
+    SurveyAddComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    MaterialModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [SurveyService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [SurveyAddComponent]
 })
 export class AppModule { }

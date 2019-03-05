@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Survey } from '../../shared/models/survey';
+import { SurveyService } from '../../shared/services/survey.service';
 
 @Component({
   selector: 'app-survey-detail',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SurveyDetailComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service: SurveyService) {
+    this.survey = this.service.surveyOut;
+  }
+
+  survey: Survey;
 
   ngOnInit() {
+    this.survey = this.service.surveyOut;
+    console.log(this.service.surveyOut);
   }
 
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SurveyWebPlatform.Models;
@@ -23,7 +22,7 @@ namespace SurveyWebPlatform.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Survey>>> GetSurveys()
         {
-            return await _context.Surveys.ToListAsync();
+             return await _context.Surveys.ToListAsync();
         }
 
         [HttpGet("{id}")]
@@ -71,6 +70,7 @@ namespace SurveyWebPlatform.Controllers
         [HttpPost]
         public async Task<ActionResult<Survey>> CreateSurvey(Survey survey)
         {
+			Console.WriteLine("Create survey");
             _context.Surveys.Add(survey);
             await _context.SaveChangesAsync();
 

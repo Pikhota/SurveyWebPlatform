@@ -1,9 +1,6 @@
-import { Question } from './question';
-
-export class Variant {
+export interface Variant {
   id: number;
   text: string;
-  voteAmount?: number;
-  questionId?: number;
-  question?: Question;
+  voteAmount: number;
+  questionId: number;
 }

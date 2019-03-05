@@ -1,21 +1,29 @@
-<form #form="ngForm">
-  <div class="form-group">
-    <button class="btn btn-secondary btn-lg float-md-right">Create Survey</button>
-  </div>
-</form>
-<!--
+<div class="nav justify-content-end">
+  <button mat-raised-button (click)="onCreate()">
+    <mat-icon>add</mat-icon> Create Survey
+  </button>
+</div>
 
-<ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title">Modal title</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
+<ng-container *ngFor="let survey of surveys">
+  <div class="mat-elevation-z8" >
+    <div class="row">
+      <div class="col-3">
+        <h3>{{ survey.SurveyTitle }}</h3>
+      </div>
+      <div class="col-6">Created {{ survey.CreationDate }}</div>
+      <div class="col-3">
+        <button mat-icon-button color="warn" (click)="onDelete(survey)">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+        <button mat-icon-button (click)="toSurvey(survey.SurveyId) ">
+          <mat-icon>arrow_forward_ios</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h5>Created by {{ survey.CreatedBy }}</h5>
+      </div>
+    </div>
   </div>
-  <div class="modal-body">
-    <p>One fine body&hellip;</p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
-  </div>
-</ng-template> -->
+</ng-container>

@@ -1,0 +1,25 @@
+<form [formGroup]="formData" autocomplete="off" class="default-form" (submit)="onSubmit(formData)" >
+  <mat-grid-list cols="1" rowHeight="300px" rowWidth="400px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <input type="hidden" value="formData.SurveyId" formControlName="SurveyId">
+        <input type="hidden"  formControlName="Questions">
+        <mat-form-field>
+          <input formControlName="SurveyTitle" matInput placeholder="Title">
+          <mat-error>The field is mandatory!</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="CreatedBy" matInput placeholder="Author's Name">
+          <mat-error>The field is mandatory!</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="CreationDate" matInput readonly>
+        </mat-form-field>
+        <div class="btn-row">
+          <button mat-raised-button color="primary" type="submit" >Submit</button>
+          <button mat-raised-button color="warn" (click)="onCancel(formData)">Cancel</button>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>
