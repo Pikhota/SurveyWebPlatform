@@ -5,11 +5,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
 
 import { AppComponent } from './app.component';
-import { SurveyService } from './shared/services/survey.service';
 import { SurveyComponent } from './survey/survey.component';
 import { SurveyAddComponent } from './survey/survey-add/survey-add.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule, RoutingComponents } from './app-routing/app-routing.module';
+import { QuestionComponent } from './question/question/question.component';
+import { ApiService } from './shared/services/api-service.service';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { AppRoutingModule, RoutingComponents } from './app-routing/app-routing.m
     AppComponent,
     RoutingComponents,
     SurveyComponent,
-    SurveyAddComponent
+    SurveyAddComponent,
+    QuestionComponent
   ],
   imports: [
     BrowserModule,
@@ -28,8 +30,8 @@ import { AppRoutingModule, RoutingComponents } from './app-routing/app-routing.m
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [SurveyService],
+  providers: [ApiService],
   bootstrap: [AppComponent],
-  entryComponents: [SurveyAddComponent]
+  entryComponents: [SurveyAddComponent, QuestionComponent]
 })
 export class AppModule { }

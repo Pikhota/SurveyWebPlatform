@@ -1,11 +1,11 @@
-<form [formGroup]="formData" autocomplete="off" class="default-form" (submit)="onSubmit(formData)" >
+<form [formGroup]="formData" autocomplete="off" class="default-form" (submit)="onCreateSurvey(formData)" >
   <mat-grid-list cols="1" rowHeight="300px" rowWidth="400px">
     <mat-grid-tile>
       <div class="controles-container">
-        <input type="hidden" value="formData.SurveyId" formControlName="SurveyId">
-        <input type="hidden"  formControlName="Questions">
+        <input type="hidden" value="formData.Id" formControlName="Id">
+        <input type="hidden" value="formData.Questions" formControlName="Questions">
         <mat-form-field>
-          <input formControlName="SurveyTitle" matInput placeholder="Title">
+          <input formControlName="Title" matInput placeholder="Title">
           <mat-error>The field is mandatory!</mat-error>
         </mat-form-field>
         <mat-form-field>
@@ -14,6 +14,10 @@
         </mat-form-field>
         <mat-form-field>
           <input formControlName="CreationDate" matInput readonly>
+        </mat-form-field>
+        <mat-form-field>
+          <textarea formControlName="InfoText" matInput placeholder="Information about Survey"></textarea>
+          <mat-error>The field is mandatory!</mat-error>
         </mat-form-field>
         <div class="btn-row">
           <button mat-raised-button color="primary" type="submit" >Submit</button>

@@ -1,5 +1,5 @@
 <div class="nav justify-content-end">
-  <button mat-raised-button (click)="onCreate()">
+  <button mat-raised-button (click)="createSurvey()">
     <mat-icon>add</mat-icon> Create Survey
   </button>
 </div>
@@ -8,14 +8,14 @@
   <div class="mat-elevation-z8" >
     <div class="row">
       <div class="col-3">
-        <h3>{{ survey.SurveyTitle }}</h3>
+        <h3>{{ survey.Title }}</h3>
       </div>
       <div class="col-6">Created {{ survey.CreationDate }}</div>
       <div class="col-3">
         <button mat-icon-button color="warn" (click)="onDelete(survey)">
           <mat-icon>delete_outline</mat-icon>
         </button>
-        <button mat-icon-button (click)="toSurvey(survey.SurveyId) ">
+        <button mat-icon-button (click)="toSurvey(survey.Id) ">
           <mat-icon>arrow_forward_ios</mat-icon>
         </button>
       </div>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SurveyWebPlatform.Models;
@@ -19,12 +20,14 @@ namespace SurveyWebPlatform.Controllers
             _context = context;
         }
 
+        // GET: api/Survey
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Survey>>> GetSurveys()
         {
-             return await _context.Surveys.ToListAsync();
+            return await _context.Surveys.ToListAsync();
         }
 
+        // GET: api/Survey/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Survey>> GetSurvey(int id)
         {
@@ -38,10 +41,11 @@ namespace SurveyWebPlatform.Controllers
             return survey;
         }
 
+        // PUT: api/Survey/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSurvey(int id, Survey survey)
         {
-            if (id != survey.SurveyId)
+            if (id != survey.Id)
             {
                 return BadRequest();
             }
@@ -67,16 +71,17 @@ namespace SurveyWebPlatform.Controllers
             return NoContent();
         }
 
+        // POST: api/Survey
         [HttpPost]
-        public async Task<ActionResult<Survey>> CreateSurvey(Survey survey)
+        public async Task<ActionResult<Survey>> PostSurvey(Survey survey)
         {
-			Console.WriteLine("Create survey");
             _context.Surveys.Add(survey);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSurvey", new { id = survey.SurveyId }, survey);
+            return CreatedAtAction("GetSurvey", new { id = survey.Id }, survey);
         }
 
+        // DELETE: api/Survey/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Survey>> DeleteSurvey(int id)
         {
@@ -94,7 +99,7 @@ namespace SurveyWebPlatform.Controllers
 
         private bool SurveyExists(int id)
         {
-            return _context.Surveys.Any(e => e.SurveyId == id);
+            return _context.Surveys.Any(e => e.Id == id);
         }
     }
 }

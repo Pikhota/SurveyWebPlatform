@@ -1,0 +1,34 @@
+<form [formGroup]="formData" autocomplete="off" class="default-form" (submit)="onSubmit(formData)">
+  <mat-grid-list cols="1" rowHeight="600px" rowWidth="400px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <input type="hidden" value="formData.Id" formControlName="Id">
+        <input type="hidden" value="formData.SurveyId" formControlName="SurveyId">
+        <input type="hidden" value="formData.Survey" formControlName="Survey">
+        <mat-form-field>
+          <textarea formControlName="Text" matInput placeholder="Question Text" required></textarea>
+          <mat-error>The field is mandatory!</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <textarea formControlName="Comment" matInput placeholder="Comment (optional)"></textarea>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="Answer1" matInput placeholder="Answer1" required>
+          <mat-error>The field is mandatory!</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="Answer2" matInput placeholder="Answer2" required>
+          <mat-error>The field is mandatory!</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="Answer3" matInput placeholder="Answer3" required>
+          <mat-error>The field is mandatory!</mat-error>
+        </mat-form-field>
+        <div class="btn-row">
+          <button mat-raised-button color="primary" type="submit">Submit</button>
+          <button mat-raised-button color="warn" (click)="onCancel(formData)">Cancel</button>
+        </div>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>

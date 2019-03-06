@@ -1,6 +1,10 @@
+import { Question } from './question';
+
 export interface Survey {
-  SurveyId: number;
-  SurveyTitle: string;
+  Id: number;
+  Title: string;
   CreatedBy: string;
   CreationDate: string;
+  InfoText: string;
+  Questions: Question[];
 }

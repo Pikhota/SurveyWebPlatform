@@ -9,12 +9,14 @@ namespace SurveyWebPlatform.Models
 	public class Question
 	{
 		[Key]
-		public int QuestionId { get; set; }
+		public int Id { get; set; }
 		[Required]
-		public string QuestionText { get; set; }
-		public string QuestionComment { get; set; }
+		public string Text { get; set; }
+		public string Comment { get; set; }
 		public int? SurveyId { get; set; }
 		public Survey Survey { get; set; }
-		public List<Variant> Variants { get; set; }
+		public string Answer1 { get; set; }
+		public string Answer2 { get; set; }
+		public string Answer3 { get; set; }
 	}
 }

@@ -45,7 +45,7 @@ namespace SurveyWebPlatform.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutQuestion(int id, Question question)
         {
-            if (id != question.QuestionId)
+            if (id != question.Id)
             {
                 return BadRequest();
             }
@@ -78,7 +78,7 @@ namespace SurveyWebPlatform.Controllers
             _context.Questions.Add(question);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetQuestion", new { id = question.QuestionId }, question);
+            return CreatedAtAction("GetQuestion", new { id = question.Id }, question);
         }
 
         // DELETE: api/Question/5
@@ -99,7 +99,7 @@ namespace SurveyWebPlatform.Controllers
 
         private bool QuestionExists(int id)
         {
-            return _context.Questions.Any(e => e.QuestionId == id);
+            return _context.Questions.Any(e => e.Id == id);
         }
     }
 }

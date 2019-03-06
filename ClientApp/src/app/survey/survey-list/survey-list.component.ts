@@ -2,8 +2,9 @@ import { Survey } from './../../shared/models/survey';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { SurveyAddComponent } from '../survey-add/survey-add.component';
-import { SurveyService } from '../../shared/services/survey.service';
 import { Router } from '@angular/router';
+import { ApiService } from '../../shared/services/api-service.service';
+import { TypeEnum } from '../../shared/type-enum';
 
 
 @Component({
@@ -13,18 +14,19 @@ import { Router } from '@angular/router';
 })
 export class SurveyListComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private service: SurveyService, private route: Router) {
-    this.service.surveyAdded.subscribe((survey: Survey) => { this.refreshList(), console.log(`Survey ${survey} added!`); });
-    this.service.surveyDeleted.subscribe((id: number) => { this.refreshList(), console.log(`Survey with id=${id} deleted!`); });
+  constructor(private dialog: MatDialog, private service: ApiService, private route: Router) {
+    this.service.surveyAdded.subscribe(() => { this.refreshList(); });
+    this.service.surveyDeleted.subscribe(() => { this.refreshList(); });
   }
 
   surveys: Survey[];
 
   ngOnInit() {
+    this.service.typeOn = TypeEnum.surveyType;
     this.refreshList();
   }
 
-  onCreate() {
+  createSurvey() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -33,17 +35,18 @@ export class SurveyListComponent implements OnInit {
   }
 
   refreshList() {
-    this.service.getSurveys().subscribe( data => this.surveys = data );
+    this.service.typeOn = TypeEnum.surveyType;
+    this.service.getItems<Survey>().subscribe( data => this.surveys = data );
   }
 
   onDelete(survey: Survey) {
-    this.service.deleteSurvey(survey.SurveyId);
-    this.service.surveyDeleted.emit(survey.SurveyId);
+    this.service.typeOn = TypeEnum.surveyType;
+    this.service.deleteItem(survey.Id);
+    this.service.surveyDeleted.emit(survey.Id);
   }
 
   toSurvey(id: number) {
-    this.service.surveyOut = this.surveys.find(data => data.SurveyId === id);
+    this.service.surveyOut = this.surveys.find(survey => survey.Id === id);
     this.route.navigate(['/survey', id]);
-
   }
 }

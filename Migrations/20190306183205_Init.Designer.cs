@@ -10,8 +10,8 @@ using SurveyWebPlatform.Models;
 namespace SurveyWebPlatform.Migrations
 {
     [DbContext(typeof(SurveyContext))]
-    [Migration("20190302195613_add nullable")]
-    partial class addnullable
+    [Migration("20190306183205_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,18 +23,24 @@ namespace SurveyWebPlatform.Migrations
 
             modelBuilder.Entity("SurveyWebPlatform.Models.Question", b =>
                 {
-                    b.Property<int>("QuestionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("QuestionComment");
+                    b.Property<string>("Answer1");
 
-                    b.Property<string>("QuestionText")
-                        .IsRequired();
+                    b.Property<string>("Answer2");
+
+                    b.Property<string>("Answer3");
+
+                    b.Property<string>("Comment");
 
                     b.Property<int?>("SurveyId");
 
-                    b.HasKey("QuestionId");
+                    b.Property<string>("Text")
+                        .IsRequired();
+
+                    b.HasKey("Id");
 
                     b.HasIndex("SurveyId");
 
@@ -43,56 +49,36 @@ namespace SurveyWebPlatform.Migrations
 
             modelBuilder.Entity("SurveyWebPlatform.Models.Survey", b =>
                 {
-                    b.Property<int>("SurveyId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("CreationDate")
                         .IsRequired();
 
-                    b.Property<string>("SurveyTitle")
-                        .IsRequired();
+                    b.Property<string>("InfoText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(300)");
 
-                    b.HasKey("SurveyId");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Surveys");
-                });
-
-            modelBuilder.Entity("SurveyWebPlatform.Models.Variant", b =>
-                {
-                    b.Property<int>("VariantId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("QuestionId");
-
-                    b.Property<string>("VariantText")
-                        .IsRequired();
-
-                    b.Property<int?>("VoteAmount");
-
-                    b.HasKey("VariantId");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("Variants");
                 });
 
             modelBuilder.Entity("SurveyWebPlatform.Models.Question", b =>
                 {
                     b.HasOne("SurveyWebPlatform.Models.Survey", "Survey")
                         .WithMany("Questions")
-                        .HasForeignKey("SurveyId");
-                });
-
-            modelBuilder.Entity("SurveyWebPlatform.Models.Variant", b =>
-                {
-                    b.HasOne("SurveyWebPlatform.Models.Question", "Question")
-                        .WithMany("Variants")
-                        .HasForeignKey("QuestionId");
+                        .HasForeignKey("SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
