@@ -1,22 +1,61 @@
 <div class="container">
-  <mat-toolbar>
-    <span class="fill-remaining-space"></span>
-    <span>{{ survey.Title }}</span>
-    <span class="fill-remaining-space"></span>
-  </mat-toolbar>
   <ng-container>
+    <mat-toolbar>
+      <span class="fill-remaining-space"></span>
+      <span>{{ survey.Title }}</span>
+      <span class="fill-remaining-space"></span>
+    </mat-toolbar>
     <div class="mat-elevation-z8">
       <p>{{ survey.InfoText }}</p>
     </div>
-    <div class="row">
-      <div class="col">{{ survey.CreatedBy }}</div>
-      <div class="col">{{ survey.CreationDate }}</div>
-      <div class="row">
-        <div class="col-9"></div>
-        <div class="col-3">
-          <button mat-raised-button (click)="createQuestion()" ><mat-icon>add</mat-icon></button>
+    <mat-grid-list cols="4" rowHeight="30px" class="mat-elevation-z8">
+      <mat-grid-tile [colspan]="3" [rowspan]="2">
+        {{ survey.CreatedBy }}
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        {{ survey.CreationDate }}
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <button mat-raised-button (click)="createQuestion()">
+          <mat-icon>add</mat-icon>Create Question
+        </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list cols="3" rowHeight="200px" *ngFor="let question of questions">
+      <mat-grid-tile [colspan]="2" class="nav ">
+        <div class="card-align">
+          <div class="mat-elevation-z8">
+            <div class="card-question">
+              <h6>Text question:</h6>
+              <mat-divider></mat-divider>
+              <p>{{ question.Text }}</p>
+              <mat-divider></mat-divider>
+              <h6>Note:</h6>
+              <p>{{ question.Comment }}</p>
+            </div>
+            <div class="action-button">
+                <button mat-icon-button color="warn" (click)="deleteQuestion(question.Id)">
+                    <mat-icon>delete_outline</mat-icon>
+                  </button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1">
+        <div class="radio-group-align">
+          <mat-radio-group class="radio-group" aria-disabled="true">
+            <mat-radio-button value="1" class="radio-button">
+              {{ question.Answer1 }}
+            </mat-radio-button>
+            <mat-radio-button value="2" class="radio-button">
+              {{ question.Answer2 }}
+            </mat-radio-button>
+            <mat-radio-button value="3" class="radio-button">
+              {{ question.Answer3 }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
   </ng-container>
 </div>

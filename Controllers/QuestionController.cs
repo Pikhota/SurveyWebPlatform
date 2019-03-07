@@ -27,8 +27,21 @@ namespace SurveyWebPlatform.Controllers
             return await _context.Questions.ToListAsync();
         }
 
-        // GET: api/Question/5
-        [HttpGet("{id}")]
+		[HttpGet("surveyquestions/{id}")]
+		public async Task<ActionResult<IEnumerable<Question>>> GetQuestionsBySurveyId(int? id)
+		{
+			if(id == null)
+			{
+				return BadRequest();
+			}
+			else
+			{
+				return await _context.Questions.Where(key => key.SurveyId == id).ToListAsync();
+			}
+		}
+
+		// GET: api/Question/5
+		[HttpGet("{id}")]
         public async Task<ActionResult<Question>> GetQuestion(int id)
         {
             var question = await _context.Questions.FindAsync(id);
@@ -96,6 +109,8 @@ namespace SurveyWebPlatform.Controllers
 
             return question;
         }
+
+
 
         private bool QuestionExists(int id)
         {

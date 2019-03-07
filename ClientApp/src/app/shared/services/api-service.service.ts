@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Survey } from '../models/survey';
 import { Question } from '../models/question';
 import { TypeEnum } from '../type-enum';
+import { FormGroup } from '@angular/forms';
 
 
 @Injectable({
@@ -16,16 +17,11 @@ export class ApiService {
   readonly surveyController = 'survey';
   readonly questionController = 'question';
 
-  surveyAdded = new EventEmitter();
-  surveyDeleted = new EventEmitter();
-  questionAdded = new EventEmitter<Question>();
-  questionDeleted = new EventEmitter<number>();
-
   surveyOut: Survey;
-  typeOn: TypeEnum;
+  typeOf: TypeEnum;
 
   getItems<T>(): Observable<T[]> {
-    switch (this.typeOn) {
+    switch (this.typeOf) {
       case TypeEnum.surveyType:
         return this.http.get<T[]>(`${this.serverUrlSSL}/${this.surveyController}`);
       case TypeEnum.questionType:
@@ -36,8 +32,12 @@ export class ApiService {
     }
   }
 
+  getQuestionsFromSurvey(surveyId: number): Observable<Question[]> {
+    return this.http.get<Question[]>(`${this.serverUrlSSL}/${this.questionController}/surveyquestions/${surveyId}`);
+  }
+
   getItem<T>(id: number) {
-    switch (this.typeOn) {
+    switch (this.typeOf) {
       case TypeEnum.surveyType:
         return this.http.get<T>(`${this.serverUrlSSL}/${this.surveyController}/${id}`);
       case TypeEnum.questionType:
@@ -49,7 +49,7 @@ export class ApiService {
   }
 
   postItem<T extends object>(item: T) {
-    switch (this.typeOn) {
+    switch (this.typeOf) {
       case TypeEnum.surveyType:
         this.http.post<Survey>(`${this.serverUrlSSL}/${this.surveyController}`, item).subscribe(data => data = item as Survey);
         break;
@@ -63,7 +63,7 @@ export class ApiService {
   }
 
   deleteItem(id: number) {
-    switch (this.typeOn) {
+    switch (this.typeOf) {
       case TypeEnum.surveyType:
         return this.http.delete<number>(`${this.serverUrlSSL}/${this.surveyController}/${id}`).subscribe(data => data = id);
       case TypeEnum.questionType:

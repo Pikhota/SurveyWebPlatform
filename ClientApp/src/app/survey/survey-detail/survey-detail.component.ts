@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Survey } from '../../shared/models/survey';
 import { ApiService } from '../../shared/services/api-service.service';
 import { Question } from '../../shared/models/question';
@@ -13,16 +13,14 @@ import { TypeEnum } from '../../shared/type-enum';
 })
 export class SurveyDetailComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private service: ApiService) {
-    this.service.questionAdded.subscribe((question: Question) => { this.initData(), console.log(`Question ${question} added!`); });
-    this.service.questionDeleted.subscribe((id: number) => { this.initData(), console.log(`Question ${id} added!`); });
-  }
+  constructor(private dialog: MatDialog, private service: ApiService) {}
 
   survey: Survey;
   questions: Question[];
 
   ngOnInit() {
     this.initData();
+    this.refreshQuestionList();
   }
 
   initData() {
@@ -30,8 +28,8 @@ export class SurveyDetailComponent implements OnInit {
   }
 
   refreshQuestionList() {
-    this.service.typeOn = TypeEnum.questionType;
-    this.service.getItems<Question>().subscribe( data => this.questions = data );
+    this.service.typeOf = TypeEnum.questionType;
+    this.service.getQuestionsFromSurvey(this.survey.Id).subscribe(data => this.questions = data);
   }
 
   createQuestion() {
@@ -39,6 +37,16 @@ export class SurveyDetailComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '40%';
-    this.dialog.open(QuestionComponent, dialogConfig);
+    const dialogRef = this.dialog.open(QuestionComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(() => this.refreshQuestionList());
+  }
+
+  deleteQuestion(id: number) {
+    this.service.typeOf = TypeEnum.questionType;
+    this.service.deleteItem(id).add(() => this.refreshQuestionList());
+  }
+
+  editQuestion(id: number) {
+
   }
 }

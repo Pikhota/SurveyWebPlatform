@@ -1,5 +1,5 @@
 import { Survey } from './../../shared/models/survey';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { SurveyAddComponent } from '../survey-add/survey-add.component';
 import { Router } from '@angular/router';
@@ -14,15 +14,12 @@ import { TypeEnum } from '../../shared/type-enum';
 })
 export class SurveyListComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private service: ApiService, private route: Router) {
-    this.service.surveyAdded.subscribe(() => { this.refreshList(); });
-    this.service.surveyDeleted.subscribe(() => { this.refreshList(); });
-  }
+  constructor(private dialog: MatDialog, protected service: ApiService, private route: Router) {}
 
   surveys: Survey[];
 
   ngOnInit() {
-    this.service.typeOn = TypeEnum.surveyType;
+    this.service.typeOf = TypeEnum.surveyType;
     this.refreshList();
   }
 
@@ -31,18 +28,18 @@ export class SurveyListComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '40%';
-    this.dialog.open(SurveyAddComponent, dialogConfig);
+    const dialogRef = this.dialog.open(SurveyAddComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(() => this.refreshList());
   }
 
   refreshList() {
-    this.service.typeOn = TypeEnum.surveyType;
+    this.service.typeOf = TypeEnum.surveyType;
     this.service.getItems<Survey>().subscribe( data => this.surveys = data );
   }
 
   onDelete(survey: Survey) {
-    this.service.typeOn = TypeEnum.surveyType;
-    this.service.deleteItem(survey.Id);
-    this.service.surveyDeleted.emit(survey.Id);
+    this.service.typeOf = TypeEnum.surveyType;
+    this.service.deleteItem(survey.Id).add(() => this.refreshList());
   }
 
   toSurvey(id: number) {

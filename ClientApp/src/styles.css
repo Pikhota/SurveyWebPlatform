@@ -29,3 +29,22 @@ div.container{
 mat-footer-row mat-footer-cell {
   justify-content: center;
 }
+
+.radio-group {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.radio-button {
+  margin: 5px;
+}
+
+.card-question {
+  width: 300px;
+  max-height: 200px;
+}
+
+.card-align {
+  position: absolute;
+  left: 5px;
+}

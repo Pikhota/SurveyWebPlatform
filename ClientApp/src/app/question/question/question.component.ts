@@ -12,26 +12,27 @@ import { Question } from '../../shared/models/question';
 })
 export class QuestionComponent implements OnInit {
 
-  constructor(private service: ApiService, public dialogRef: MatDialogRef<QuestionComponent>) { }
+  constructor(private service: ApiService, public dialogRef: MatDialogRef<QuestionComponent>) {}
 
   formData: FormGroup = new FormGroup({
     Id: new FormControl(0),
     Text: new FormControl('', Validators.required),
     Comment: new FormControl(''),
-    SurveyId: new FormControl(this.service.surveyOut.Id),
-    Survey: new FormControl(this.service.surveyOut),
+    SurveyId: new FormControl( this.service.surveyOut.Id ),
+    Survey: new FormControl(null),
     Answer1: new FormControl('', Validators.required),
     Answer2: new FormControl('', Validators.required),
     Answer3: new FormControl('', Validators.required)
   });
 
-  ngOnInit() {}
+
+  ngOnInit() {
+  }
 
   onSubmit(form: FormGroup) {
     if (form.valid) {
-      this.service.typeOn = TypeEnum.questionType;
-      // this.service.postItem<Question>(form.value);
-      this.service.questionAdded.emit(form.value);
+      this.service.typeOf = TypeEnum.questionType;
+      this.service.postItem<Question>(form.value);
       this.resetForm(form);
       this.dialogRef.close();
     }
@@ -55,7 +56,7 @@ export class QuestionComponent implements OnInit {
       Text: '',
       Comment: '',
       SurveyId: this.service.surveyOut.Id,
-      Survey: this.service.surveyOut,
+      Survey: null,
       Answer1: '',
       Answer2: '',
       Answer3: ''

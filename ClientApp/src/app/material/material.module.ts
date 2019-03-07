@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as Material from '@angular/material';
+import { MatDividerModule } from '@angular/material';
 
 @NgModule({
   declarations: [],
@@ -12,8 +13,6 @@ import * as Material from '@angular/material';
     Material.MatInputModule,
     Material.MatRadioModule,
     Material.MatSelectModule,
-    Material.MatCheckboxModule,
-    Material.MatDatepickerModule,
     Material.MatNativeDateModule,
     Material.MatButtonModule,
     Material.MatSnackBarModule,
@@ -23,7 +22,8 @@ import * as Material from '@angular/material';
     Material.MatSortModule,
     Material.MatDialogModule,
     Material.MatProgressSpinnerModule,
-    Material.MatCardModule
+    Material.MatCardModule,
+    MatDividerModule
   ],
   exports: [
     Material.MatToolbarModule,
@@ -33,8 +33,6 @@ import * as Material from '@angular/material';
     Material.MatRadioModule,
     Material.MatSelectModule,
     Material.MatCheckboxModule,
-    Material.MatDatepickerModule,
-    Material.MatNativeDateModule,
     Material.MatButtonModule,
     Material.MatSnackBarModule,
     Material.MatTableModule,
@@ -43,7 +41,8 @@ import * as Material from '@angular/material';
     Material.MatSortModule,
     Material.MatDialogModule,
     Material.MatProgressSpinnerModule,
-    Material.MatCardModule
+    Material.MatCardModule,
+    MatDividerModule
   ]
 })
 export class MaterialModule { }
