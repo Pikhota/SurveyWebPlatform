@@ -7,7 +7,7 @@ import { SurveyComponent } from '../survey/survey.component';
 const routes: Routes = [
   { path: '', component: SurveyComponent },
   { path: 'survey/:id', component: SurveyDetailComponent },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '/' }
 ];
 
 @NgModule({

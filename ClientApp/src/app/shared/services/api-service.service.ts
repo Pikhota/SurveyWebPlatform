@@ -16,8 +16,6 @@ export class ApiService {
   readonly serverUrlSSL = 'https://localhost:44318/api';
   readonly surveyController = 'survey';
   readonly questionController = 'question';
-
-  surveyOut: Survey;
   typeOf: TypeEnum;
 
   getItems<T>(): Observable<T[]> {

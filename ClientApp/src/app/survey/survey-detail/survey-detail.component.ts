@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Survey } from '../../shared/models/survey';
 import { ApiService } from '../../shared/services/api-service.service';
@@ -13,18 +14,20 @@ import { TypeEnum } from '../../shared/type-enum';
 })
 export class SurveyDetailComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private service: ApiService) {}
+  constructor(private dialog: MatDialog, private service: ApiService, private route: ActivatedRoute) {}
 
   survey: Survey;
   questions: Question[];
 
   ngOnInit() {
     this.initData();
-    this.refreshQuestionList();
   }
 
   initData() {
-    this.survey = this.service.surveyOut;
+    this.service.typeOf = TypeEnum.surveyType;
+    const id = 'id';
+    this.route.params.subscribe(data => this.service.getItem<Survey>(+data[id])
+    .subscribe((survey: Survey) => this.survey = survey)).add(this.refreshQuestionList());
   }
 
   refreshQuestionList() {

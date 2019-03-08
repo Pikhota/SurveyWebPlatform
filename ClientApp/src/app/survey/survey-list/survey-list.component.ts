@@ -43,7 +43,6 @@ export class SurveyListComponent implements OnInit {
   }
 
   toSurvey(id: number) {
-    this.service.surveyOut = this.surveys.find(survey => survey.Id === id);
     this.route.navigate(['/survey', id]);
   }
 }
