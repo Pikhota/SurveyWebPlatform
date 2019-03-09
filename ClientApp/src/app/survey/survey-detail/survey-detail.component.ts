@@ -1,3 +1,4 @@
+import { Survey } from './../../shared/models/survey';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../shared/services/api-service.service';
@@ -12,21 +13,16 @@ import { TypeEnum } from '../../shared/type-enum';
 })
 export class SurveyDetailComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, protected service: ApiService, private route: ActivatedRoute) {}
+  constructor(public service: ApiService, private dialog: MatDialog, private route: ActivatedRoute) {
+    this.surveyId = +this.route.snapshot.paramMap.get('id');
+    this.service.typeOf = TypeEnum.surveyType;
+    this.service.getItem(this.surveyId);
+  }
+
+  surveyId: number;
 
   ngOnInit() {
-    this.initData();
-  }
-
-  initData() {
-    const id: number = +this.route.snapshot.paramMap.get('id');
-    this.service.typeOf = TypeEnum.surveyType;
-    this.service.getItem(id);
-    this.refreshQuestionList();
-  }
-
-  refreshQuestionList() {
-    this.service.getQuestionsFromSurvey(this.service.survey.Id);
+    this.service.getQuestionsFromSurvey(this.surveyId);
   }
 
   createQuestion() {
@@ -34,14 +30,14 @@ export class SurveyDetailComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '40%';
-    dialogConfig.data = { id: this.service.survey.Id };
+    dialogConfig.data = { id: this.surveyId };
     const dialogRef = this.dialog.open(QuestionComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(() => this.refreshQuestionList());
+    dialogRef.afterClosed().subscribe(() => this.service.getQuestionsFromSurvey(this.surveyId));
   }
 
   deleteQuestion(id: number) {
     this.service.typeOf = TypeEnum.questionType;
-    this.service.deleteItem(id).add(() => this.refreshQuestionList());
+    this.service.deleteItem(id).add(() => this.service.getQuestionsFromSurvey(this.surveyId));
   }
 
   editQuestion(id: number) {

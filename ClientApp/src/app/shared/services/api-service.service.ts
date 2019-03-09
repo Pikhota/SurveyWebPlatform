@@ -1,10 +1,8 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { Survey } from '../models/survey';
 import { Question } from '../models/question';
 import { TypeEnum } from '../type-enum';
-import { FormGroup } from '@angular/forms';
 
 
 @Injectable({
@@ -19,8 +17,8 @@ export class ApiService {
   typeOf: TypeEnum;
   surveys: Survey[];
   surveyQuestionList: Question[];
-  questions: Question[];
   survey: Survey;
+  questions: Question[];
   question: Question;
 
   getItems() {
