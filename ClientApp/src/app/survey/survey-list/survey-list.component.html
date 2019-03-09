@@ -4,7 +4,7 @@
       <mat-icon>add</mat-icon> Create Survey
     </button>
   </div>
-  <div class="mat-elevation-z8" *ngFor="let survey of surveys">
+  <div class="mat-elevation-z8" *ngFor="let survey of service.surveys">
     <div class="row">
       <div class="col-3">
         <h3>{{ survey.Title }}</h3>

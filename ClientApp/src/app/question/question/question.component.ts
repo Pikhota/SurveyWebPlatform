@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ApiService } from '../../shared/services/api-service.service';
 import { MatDialogRef } from '@angular/material';
 import { TypeEnum } from '../../shared/type-enum';
 import { Question } from '../../shared/models/question';
+import {MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-question',
@@ -12,13 +13,15 @@ import { Question } from '../../shared/models/question';
 })
 export class QuestionComponent implements OnInit {
 
-  constructor(private service: ApiService, public dialogRef: MatDialogRef<QuestionComponent>) {}
+  constructor(private service: ApiService, public dialogRef: MatDialogRef<QuestionComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {}
+
 
   formData: FormGroup = new FormGroup({
     Id: new FormControl(0),
     Text: new FormControl('', Validators.required),
     Comment: new FormControl(''),
-    SurveyId: new FormControl( this.service.surveyOut.Id ),
+    SurveyId: new FormControl(null),
     Survey: new FormControl(null),
     Answer1: new FormControl('', Validators.required),
     Answer2: new FormControl('', Validators.required),
@@ -26,8 +29,7 @@ export class QuestionComponent implements OnInit {
   });
 
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onSubmit(form: FormGroup) {
     if (form.valid) {
@@ -55,7 +57,7 @@ export class QuestionComponent implements OnInit {
       Id: 0,
       Text: '',
       Comment: '',
-      SurveyId: this.service.surveyOut.Id,
+      SurveyId: null,
       Survey: null,
       Answer1: '',
       Answer2: '',

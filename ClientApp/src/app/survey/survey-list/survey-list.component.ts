@@ -1,5 +1,5 @@
 import { Survey } from './../../shared/models/survey';
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { SurveyAddComponent } from '../survey-add/survey-add.component';
 import { Router } from '@angular/router';
@@ -16,7 +16,7 @@ export class SurveyListComponent implements OnInit {
 
   constructor(private dialog: MatDialog, protected service: ApiService, private route: Router) {}
 
-  surveys: Survey[];
+  //surveys: Survey[];
 
   ngOnInit() {
     this.service.typeOf = TypeEnum.surveyType;
@@ -34,7 +34,7 @@ export class SurveyListComponent implements OnInit {
 
   refreshList() {
     this.service.typeOf = TypeEnum.surveyType;
-    this.service.getItems<Survey>().subscribe( data => this.surveys = data );
+    this.service.getItems();//.subscribe( data => this.surveys = data );
   }
 
   onDelete(survey: Survey) {

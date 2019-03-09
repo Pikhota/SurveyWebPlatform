@@ -3,7 +3,7 @@
     <mat-grid-tile>
       <div class="controles-container">
         <input type="hidden" value="formData.Id" formControlName="Id">
-        <input type="hidden" value="formData.SurveyId" formControlName="SurveyId">
+        <input type="hidden" value="this.data.id" formControlName="SurveyId">
         <input type="hidden" value="formData.Survey" formControlName="Survey">
         <mat-form-field>
           <textarea formControlName="Text" matInput placeholder="Question Text" required></textarea>

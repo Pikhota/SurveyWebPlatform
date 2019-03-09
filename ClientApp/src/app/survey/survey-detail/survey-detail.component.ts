@@ -1,8 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { Survey } from '../../shared/models/survey';
 import { ApiService } from '../../shared/services/api-service.service';
-import { Question } from '../../shared/models/question';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { QuestionComponent } from '../../question/question/question.component';
 import { TypeEnum } from '../../shared/type-enum';
@@ -14,25 +12,21 @@ import { TypeEnum } from '../../shared/type-enum';
 })
 export class SurveyDetailComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, private service: ApiService, private route: ActivatedRoute) {}
-
-  survey: Survey;
-  questions: Question[];
+  constructor(private dialog: MatDialog, protected service: ApiService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.initData();
   }
 
   initData() {
+    const id: number = +this.route.snapshot.paramMap.get('id');
     this.service.typeOf = TypeEnum.surveyType;
-    const id = 'id';
-    this.route.params.subscribe(data => this.service.getItem<Survey>(+data[id])
-    .subscribe((survey: Survey) => this.survey = survey)).add(this.refreshQuestionList());
+    this.service.getItem(id);
+    this.refreshQuestionList();
   }
 
   refreshQuestionList() {
-    this.service.typeOf = TypeEnum.questionType;
-    this.service.getQuestionsFromSurvey(this.survey.Id).subscribe(data => this.questions = data);
+    this.service.getQuestionsFromSurvey(this.service.survey.Id);
   }
 
   createQuestion() {
@@ -40,6 +34,7 @@ export class SurveyDetailComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '40%';
+    dialogConfig.data = { id: this.service.survey.Id };
     const dialogRef = this.dialog.open(QuestionComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(() => this.refreshQuestionList());
   }

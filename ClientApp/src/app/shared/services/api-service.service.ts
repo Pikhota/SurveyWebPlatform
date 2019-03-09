@@ -17,30 +17,41 @@ export class ApiService {
   readonly surveyController = 'survey';
   readonly questionController = 'question';
   typeOf: TypeEnum;
+  surveys: Survey[];
+  surveyQuestionList: Question[];
+  questions: Question[];
+  survey: Survey;
+  question: Question;
 
-  getItems<T>(): Observable<T[]> {
+  getItems() {
     switch (this.typeOf) {
       case TypeEnum.surveyType:
-        return this.http.get<T[]>(`${this.serverUrlSSL}/${this.surveyController}`);
+        this.http.get(`${this.serverUrlSSL}/${this.surveyController}`).subscribe((surveyList: Survey[]) => this.surveys = surveyList);
+        break;
       case TypeEnum.questionType:
-        return this.http.get<T[]>(`${this.serverUrlSSL}/${this.questionController}`);
-      case TypeEnum.unknown:
+        this.http.get(`${this.serverUrlSSL}/${this.questionController}`)
+          .subscribe((questionList: Question[]) => this.questions = questionList);
+        break;
+      default:
         console.log('Cast error');
         break;
     }
   }
 
-  getQuestionsFromSurvey(surveyId: number): Observable<Question[]> {
-    return this.http.get<Question[]>(`${this.serverUrlSSL}/${this.questionController}/surveyquestions/${surveyId}`);
+  getQuestionsFromSurvey(surveyId: number) {
+    this.http.get(`${this.serverUrlSSL}/${this.questionController}/surveyquestions/${surveyId}`)
+      .subscribe((questionList: Question[]) => this.surveyQuestionList = questionList);
   }
 
-  getItem<T>(id: number) {
+  getItem(id: number) {
     switch (this.typeOf) {
       case TypeEnum.surveyType:
-        return this.http.get<T>(`${this.serverUrlSSL}/${this.surveyController}/${id}`);
+        this.http.get(`${this.serverUrlSSL}/${this.surveyController}/${id}`).subscribe((item: Survey) => this.survey = item);
+        break;
       case TypeEnum.questionType:
-        return this.http.get<T>(`${this.serverUrlSSL}/${this.questionController}/${id}`);
-      case TypeEnum.unknown:
+        this.http.get(`${this.serverUrlSSL}/${this.questionController}/${id}`).subscribe((item: Question) => this.question = item);
+        break;
+      default:
         console.log('Cast error');
         break;
     }
@@ -54,7 +65,7 @@ export class ApiService {
       case TypeEnum.questionType:
         this.http.post<Question>(`${this.serverUrlSSL}/${this.questionController}`, item).subscribe(data => data = item as Question);
         break;
-      case TypeEnum.unknown:
+      default:
         console.log('Cast error');
         break;
     }
@@ -66,7 +77,7 @@ export class ApiService {
         return this.http.delete<number>(`${this.serverUrlSSL}/${this.surveyController}/${id}`).subscribe(data => data = id);
       case TypeEnum.questionType:
         return this.http.delete<number>(`${this.serverUrlSSL}/${this.questionController}/${id}`).subscribe(data => data = id);
-      case TypeEnum.unknown:
+      default:
         console.log('Cast error');
         break;
     }

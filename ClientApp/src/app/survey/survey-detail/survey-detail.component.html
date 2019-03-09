@@ -2,18 +2,18 @@
   <ng-container>
     <mat-toolbar>
       <span class="fill-remaining-space"></span>
-      <span>{{ survey.Title }}</span>
+      <span>{{ service.survey.Title }}</span>
       <span class="fill-remaining-space"></span>
     </mat-toolbar>
     <div class="mat-elevation-z8">
-      <p>{{ survey.InfoText }}</p>
+      <p>{{ service.survey.InfoText }}</p>
     </div>
     <mat-grid-list cols="4" rowHeight="30px" class="mat-elevation-z8">
       <mat-grid-tile [colspan]="3" [rowspan]="2">
-        {{ survey.CreatedBy }}
+        {{ service.survey.CreatedBy }}
       </mat-grid-tile>
       <mat-grid-tile [colspan]="1" [rowspan]="1">
-        {{ survey.CreationDate }}
+        {{ service.survey.CreationDate }}
       </mat-grid-tile>
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <button mat-raised-button (click)="createQuestion()">
@@ -21,7 +21,7 @@
         </button>
       </mat-grid-tile>
     </mat-grid-list>
-    <mat-grid-list cols="3" rowHeight="200px" *ngFor="let question of questions">
+    <mat-grid-list cols="3" rowHeight="200px" *ngFor="let question of service.surveyQuestionList">
       <mat-grid-tile [colspan]="2" class="nav ">
         <div class="card-align">
           <div class="mat-elevation-z8">
