@@ -2,9 +2,10 @@ import { Survey } from './../../shared/models/survey';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { SurveyAddComponent } from '../survey-add/survey-add.component';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 import { ApiService } from '../../shared/services/api-service.service';
 import { TypeEnum } from '../../shared/type-enum';
+import { NavigationService } from 'src/app/shared/services/navigation.service';
 
 
 @Component({
@@ -14,7 +15,8 @@ import { TypeEnum } from '../../shared/type-enum';
 })
 export class SurveyListComponent implements OnInit {
 
-  constructor(private dialog: MatDialog, protected service: ApiService, private route: Router) {}
+  constructor(private dialog: MatDialog, protected service: ApiService, private route: Router,
+              private navigationService: NavigationService) {}
 
   ngOnInit() {
     this.service.typeOf = TypeEnum.surveyType;
@@ -41,6 +43,12 @@ export class SurveyListComponent implements OnInit {
   }
 
   toSurvey(id: number) {
+    this.navigationService.isEditPage = false;
+    this.route.navigate(['/survey', id]);
+  }
+
+  onEdit(id: number) {
+    this.navigationService.isEditPage = true;
     this.route.navigate(['/survey', id]);
   }
 }

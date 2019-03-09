@@ -11,6 +11,9 @@
       </div>
       <div class="col-6">Created {{ survey.CreationDate }}</div>
       <div class="col-3">
+        <button mat-icon-button color="warn" (click)="onEdit(survey.Id)">
+          <mat-icon>launch</mat-icon>
+        </button>
         <button mat-icon-button color="warn" (click)="onDelete(survey)">
           <mat-icon>delete_outline</mat-icon>
         </button>

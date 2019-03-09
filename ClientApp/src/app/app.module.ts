@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule, RoutingComponents } from './app-routing/app-routing.module';
 import { QuestionComponent } from './question/question/question.component';
 import { ApiService } from './shared/services/api-service.service';
+import { NavigationService } from './shared/services/navigation.service';
 
 
 @NgModule({
@@ -30,7 +31,7 @@ import { ApiService } from './shared/services/api-service.service';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [ApiService],
+  providers: [ApiService, NavigationService],
   bootstrap: [AppComponent],
   entryComponents: [SurveyAddComponent, QuestionComponent]
 })

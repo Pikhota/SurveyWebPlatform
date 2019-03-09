@@ -9,15 +9,23 @@
       <p>{{ service.survey.InfoText }}</p>
     </div>
     <mat-grid-list cols="4" rowHeight="30px" class="mat-elevation-z8">
-      <mat-grid-tile [colspan]="3" [rowspan]="2">
+      <mat-grid-tile [colspan]="3" [rowspan]="3">
         {{ service.survey.CreatedBy }}
       </mat-grid-tile>
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         {{ service.survey.CreationDate }}
       </mat-grid-tile>
       <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <button mat-raised-button (click)="createQuestion()">
+        <button mat-raised-button (click)="createQuestion()" *ngIf="!navigateService.isEditPage" >
           <mat-icon>add</mat-icon>Create Question
+        </button>
+        <button btn btn-success (click)="createQuestion()" *ngIf="navigateService.isEditPage" >
+            Update changes
+          </button>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <button mat-raised-button (click)="backToMainPage()">
+          <mat-icon>arrow_back_ios</mat-icon>Back
         </button>
       </mat-grid-tile>
     </mat-grid-list>
@@ -33,10 +41,13 @@
               <h6>Note:</h6>
               <p>{{ question.Comment }}</p>
             </div>
-            <div class="action-button">
-                <button mat-icon-button color="warn" (click)="deleteQuestion(question.Id)">
-                    <mat-icon>delete_outline</mat-icon>
-                  </button>
+            <div class="action-button" *ngIf="navigateService.isEditPage" >
+              <button mat-icon-button color="warn" (click)="deleteQuestion(question.Id)">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+              <button mat-icon-button (click)="editQuestion(question.Id)">
+                <mat-icon>launch</mat-icon>
+              </button>
             </div>
           </div>
         </div>
