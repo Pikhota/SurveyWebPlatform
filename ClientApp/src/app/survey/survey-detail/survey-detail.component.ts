@@ -1,3 +1,4 @@
+import { Question } from './../../shared/models/question';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../shared/services/api-service.service';
@@ -47,7 +48,8 @@ export class SurveyDetailComponent implements OnInit {
     this.service.deleteItem(id).add(() => this.service.getQuestionsFromSurvey(this.surveyId));
   }
 
-  editQuestion(id: number) {
-
+  editQuestion(id: number, question: Question) {
+    this.service.typeOf = TypeEnum.questionType;
+    this.service.putItem<Question>(id, question);
   }
 }

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="!navigateService.isEditPage">
   <ng-container>
     <mat-toolbar>
       <span class="fill-remaining-space"></span>
@@ -16,10 +16,69 @@
         {{ service.survey.CreationDate }}
       </mat-grid-tile>
       <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <button mat-raised-button (click)="createQuestion()" *ngIf="!navigateService.isEditPage" >
+        <button mat-raised-button (click)="createQuestion()" >
           <mat-icon>add</mat-icon>Create Question
         </button>
-        <button btn btn-success (click)="createQuestion()" *ngIf="navigateService.isEditPage" >
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <button mat-raised-button (click)="backToMainPage()">
+          <mat-icon>arrow_back_ios</mat-icon>Back
+        </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list cols="3" rowHeight="200px" *ngFor="let question of service.surveyQuestionList">
+      <mat-grid-tile [colspan]="2" class="nav ">
+        <div class="card-align">
+          <div class="mat-elevation-z8">
+            <div class="card-question">
+              <h6>Text question:</h6>
+              <mat-divider></mat-divider>
+              <p>{{ question.Text }}</p>
+              <mat-divider></mat-divider>
+              <h6>Note:</h6>
+              <p>{{ question.Comment }}</p>
+            </div>
+          </div>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1">
+        <div class="radio-group-align">
+          <mat-radio-group class="radio-group" aria-disabled="true">
+            <mat-radio-button value="1" class="radio-button">
+              {{ question.Answer1 }}
+            </mat-radio-button>
+            <mat-radio-button value="2" class="radio-button">
+              {{ question.Answer2 }}
+            </mat-radio-button>
+            <mat-radio-button value="3" class="radio-button">
+              {{ question.Answer3 }}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </ng-container>
+</div>
+
+<div class="container" *ngIf="navigateService.isEditPage">
+  <ng-container>
+    <mat-toolbar>
+      <span class="fill-remaining-space"></span>
+      <input matInput value="service.survey.Title" *ngIf="navigateService.isEditPage" required>
+      <span class="fill-remaining-space"></span>
+    </mat-toolbar>
+    <div class="mat-elevation-z8">
+        <area matInput value="service.survey.InfoText" >
+    </div>
+    <mat-grid-list cols="4" rowHeight="30px" class="mat-elevation-z8">
+      <mat-grid-tile [colspan]="3" [rowspan]="3">
+        {{ service.survey.CreatedBy }}
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        {{ service.survey.CreationDate }}
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <button btn btn-success (click)="backToMainPage()">
             Update changes
           </button>
       </mat-grid-tile>
@@ -41,7 +100,7 @@
               <h6>Note:</h6>
               <p>{{ question.Comment }}</p>
             </div>
-            <div class="action-button" *ngIf="navigateService.isEditPage" >
+            <div class="action-button">
               <button mat-icon-button color="warn" (click)="deleteQuestion(question.Id)">
                 <mat-icon>delete_outline</mat-icon>
               </button>

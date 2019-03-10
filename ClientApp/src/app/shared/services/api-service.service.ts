@@ -1,7 +1,7 @@
+import { Question } from './../models/question';
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Survey } from '../models/survey';
-import { Question } from '../models/question';
 import { TypeEnum } from '../type-enum';
 
 
@@ -77,6 +77,14 @@ export class ApiService {
         return this.http.delete<number>(`${this.serverUrlSSL}/${this.questionController}/${id}`).subscribe(data => data = id);
       default:
         console.log('Cast error');
+        break;
+    }
+  }
+
+  putItem<T>(id: number, item: T) {
+    switch (this.typeOf) {
+      case TypeEnum.questionType:
+        this.http.put(`${this.serverUrlSSL}/${this.questionController}/${id}`, item);
         break;
     }
   }
