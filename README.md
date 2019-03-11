@@ -9,10 +9,9 @@ Unit tests are not available.
 Codefirst approach was used to create Database. 
 
 # Frontend
-Angular CLI 7.2.0
+Angular CLI 7.3.3
 
 # Launch settings
 Default api url is https://localhost:44318 , you can change in in launchSettings.json
-
-# Note: 
+Note: 
 44318 is a sslPort because i have created app with Https configuration protocol.
