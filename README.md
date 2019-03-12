@@ -9,7 +9,7 @@ Unit tests are not available.
 Codefirst approach was used to create Database. 
 
 # Frontend
-Angular CLI 7.3.3
+Angular CLI 7.3.3, Angular-Materials - material.module.ts contains all modules which i have used.
 
 # Launch settings
 Default api url is https://localhost:44318 , you can change in in launchSettings.json
